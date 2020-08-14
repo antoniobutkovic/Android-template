@@ -1,4 +1,4 @@
-package com.example.mvi_template
+package com.example.template
 
 import org.junit.Test
 

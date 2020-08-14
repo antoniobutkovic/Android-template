@@ -1,2 +1,2 @@
-rootProject.name='MVI-template'
+rootProject.name='Template'
 include ':app'
