@@ -10,7 +10,7 @@ import javax.inject.Singleton
 class SessionManager @Inject constructor(private val prefsManager: PrefsManager) {
 
     private val _cachedToken = MutableLiveData<String?>()
-    val cachedToken: LiveData<String?> = _cachedToken
+    val cachedToken: LiveData<String?> get() = _cachedToken
 
     fun login(newValue: String){
         setValue(newValue)
@@ -18,6 +18,13 @@ class SessionManager @Inject constructor(private val prefsManager: PrefsManager)
 
     fun logout(){
         setValue(null)
+    }
+
+    fun checkIfUserIsAlreadyLoggedIn(){
+        val token = prefsManager.getStringField(PrefsManager.AUTH_TOKEN)
+        if (token != null){
+            _cachedToken.value = token
+        }
     }
 
     fun setValue(newValue: String?) {

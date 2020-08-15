@@ -2,6 +2,7 @@ package com.example.template.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.template.base.BaseActivity
@@ -20,9 +21,10 @@ class AuthActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_auth)
-
         viewModel = ViewModelProvider(this, providerFactory).get(AuthViewModel::class.java)
+
         subscribeObservers()
+        checkIfUserIsAlreadyLoggedIn()
     }
 
     private fun subscribeObservers() {
@@ -31,7 +33,6 @@ class AuthActivity : BaseActivity() {
                 sessionManager.login(it)
             }
         })
-
         sessionManager.cachedToken.observe(this, Observer { authToken ->
             authToken.let{
                 navigateToMainActivity()
@@ -41,5 +42,10 @@ class AuthActivity : BaseActivity() {
 
     private fun navigateToMainActivity() {
         startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
+
+    private fun checkIfUserIsAlreadyLoggedIn() {
+        sessionManager.checkIfUserIsAlreadyLoggedIn()
     }
 }

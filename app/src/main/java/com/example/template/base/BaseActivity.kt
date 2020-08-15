@@ -37,30 +37,6 @@ open class BaseActivity : DaggerAppCompatActivity(), BaseView {
         Log.e("TAG", "stringId: $stringResourceId")
     }
 
-    override fun showLoader(show: Boolean) {
-        Log.e("TAG", "show loader: $show")
-    }
-
-    override fun showLoader(show: Boolean, cancelable: Boolean) {
-        Log.e("TAG", "show loader cancelable: $show")
-    }
-
-    override fun showShortInfo(info: String) {
-        Log.e("TAG", "show show info: $info")
-    }
-
-    override fun showShortInfo(stringResourceId: Int) {
-        Log.e("TAG", "short info stringId: $stringResourceId")
-    }
-
-    override fun showInfoDialog(title: String?, description: String?, buttonText: String?) {
-        Log.e("TAG", "show info dialog: $title")
-    }
-
-    override fun showInfoDialog(titleResourceId: Int, descriptionResourceId: Int, buttonText: Int) {
-        Log.e("TAG", "show info dialog stringId: $titleResourceId")
-    }
-
     override fun hideKeyboard(view: View) {
         Log.e("TAG", "hide keyboard")
     }
