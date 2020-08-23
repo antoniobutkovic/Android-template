@@ -21,10 +21,11 @@ abstract class BaseRepository {
                 // save to local database if lambda is set
                 saveLocal()
             }
-            if (response.code() == 401) {
-                DataState.error(Error(response.message(), 401))
-            } else {
-                DataState.success(body)
+            when (response.code()) {
+                400 -> DataState.error(Error(response.message(), 400))
+                401 -> DataState.error(Error(response.message(), 401))
+                else -> DataState.success(body)
+
             }
 
         } catch (error: Throwable) {

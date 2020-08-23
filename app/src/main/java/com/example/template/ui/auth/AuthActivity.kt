@@ -28,13 +28,20 @@ class AuthActivity : BaseActivity() {
     }
 
     private fun subscribeObservers() {
-        viewModel.dataState.observe(this, DataStateObserver(this) { data ->
+        viewModel.login.observe(this, DataStateObserver(this) { data ->
             data?.token?.let {
                 sessionManager.login(it)
             }
         })
+
+        viewModel.register.observe(this, DataStateObserver(this) { data ->
+            data?.token?.let {
+                sessionManager.login(it)
+            }
+        })
+
         sessionManager.cachedToken.observe(this, Observer { authToken ->
-            authToken.let{
+            authToken?.let{
                 navigateToMainActivity()
             }
         })

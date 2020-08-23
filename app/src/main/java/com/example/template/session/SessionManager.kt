@@ -1,5 +1,6 @@
 package com.example.template.session
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.template.utils.PrefsManager

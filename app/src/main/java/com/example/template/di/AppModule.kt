@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
+import com.example.template.BuildConfig
 import com.example.template.R
 import com.example.template.persistence.AccountPropertiesDao
 import com.example.template.persistence.AppDatabase
@@ -15,8 +16,12 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @Module
@@ -34,11 +39,27 @@ class AppModule{
         return GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
     }
 
+    @Provides
+    @Singleton
+    fun provideLoggingInterceptor(): HttpLoggingInterceptor {
+        val interceptor = HttpLoggingInterceptor()
+        interceptor.level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+        return interceptor
+    }
+
+    @Provides
+    fun provideOkHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .build()
+    }
+
     @Singleton
     @Provides
-    fun provideRetrofitBuilder(gsonBuilder: Gson): Retrofit.Builder{
+    fun provideRetrofitBuilder(gsonBuilder: Gson, client: OkHttpClient): Retrofit.Builder{
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .client(client)
             .addConverterFactory(GsonConverterFactory.create(gsonBuilder))
     }
 
