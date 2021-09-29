@@ -4,12 +4,12 @@
     app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/registerFragment"
-        android:name="com.example.template.ui.auth.RegisterFragment"
+        android:name="com.example.template.features.auth.RegisterFragment"
         android:label="RegisterFragment"
         />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.template.ui.auth.LoginFragment"
+        android:name="com.example.template.features.auth.LoginFragment"
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
